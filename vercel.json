@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "bot.js", "use": "@vercel/node" },
+    { "src": "login.html", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/login.html", "dest": "/login.html" },
+    { "src": "/webhook", "dest": "bot.js", "methods": ["POST"] },
+    { "src": "/", "dest": "/login.html" }
+  ]
+}

